@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 using UnityEngine;
@@ -23,11 +24,18 @@ public class ZoneSpawners : MonoBehaviour {
 	public int spawnRate3 = 0;
 	public int spawnRate4 = 0;
 	
+	//array zombies in each zone
+	GameObject[] zombieTotal1;
+	GameObject[] zombieTotal2 ;
+	GameObject[] zombieTotal3 ;
+	GameObject[] zombieTotal4 ;
+	
 	//total zombies in each zone
-	public int zombieTotal1 = 0;
-	public int zombieTotal2 = 0;
-	public int zombieTotal3 = 0;
-	public int zombieTotal4 = 0;
+	public int z1 = 0;
+	public int z2 = 0;
+	public int z3 = 0;
+	public int z4 = 0;
+		
 	
 	//max zombies for each zone
 	public int maxZombieForZone1 = 0;
@@ -55,19 +63,37 @@ public class ZoneSpawners : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+		
+		zombieTotal1 = GameObject.FindGameObjectsWithTag("z1");
+		zombieTotal2 = GameObject.FindGameObjectsWithTag("z2");
+		zombieTotal3 = GameObject.FindGameObjectsWithTag("z3");
+		zombieTotal4 = GameObject.FindGameObjectsWithTag("z4");
+		
+		z1 = totalZombieCalculator(zombieTotal1);
+		z2 = totalZombieCalculator(zombieTotal2);
+		z3 = totalZombieCalculator(zombieTotal3);
+		z4 = totalZombieCalculator(zombieTotal4);
 
 		zone1Total = totalCalculator(heatZones1);
 		zone2Total = totalCalculator(heatZones2);
 		zone3Total = totalCalculator(heatZones3);
 		zone4Total = totalCalculator(heatZones4);
+		
 		spawnRate1 = spawnRate(zone1Total);
 		spawnRate2 = spawnRate(zone2Total);
 		spawnRate3 = spawnRate(zone3Total);
 		spawnRate4 = spawnRate(zone4Total);
+		
 		maxZombieForZone1 = maxZombie(spawnRate1);
 		maxZombieForZone2 = maxZombie(spawnRate2);
 		maxZombieForZone3 = maxZombie(spawnRate3);
 		maxZombieForZone4 = maxZombie(spawnRate4);
+
+		spawnZombies(maxZombieForZone1, z1);
+		spawnZombies(maxZombieForZone2, z2);
+		spawnZombies(maxZombieForZone3, z3);
+		spawnZombies(maxZombieForZone4, z4);
+		
 	}
 
 	int totalCalculator(GameObject[] zone)
@@ -77,6 +103,19 @@ public class ZoneSpawners : MonoBehaviour {
 		{
 			int value = heatzone.GetComponent<HeatMap>().heat;
 			total += value;
+			
+		}
+
+		return total;
+	}
+	
+	int totalZombieCalculator(GameObject[] zombies)
+	{
+		int total = 0;
+		foreach (GameObject zombie in zombies)
+		{
+			
+			total ++;
 			
 		}
 
@@ -113,11 +152,11 @@ public class ZoneSpawners : MonoBehaviour {
 		switch (rate)
 		{
 			case 4:
-				return 40;
+				return 10;
 			case 3:
-				return 30;
+				return 10;
 			case 2:
-				return 20;
+				return 10;
 			case 1:
 				return 10;
 			default:
@@ -126,13 +165,42 @@ public class ZoneSpawners : MonoBehaviour {
 		}
 	}
 
-
-	void checkTag()
+/**
+ * NEEDS EDITING CRASHING UNITY
+ * NEED TO MAKE USE GPU
+ */
+	void spawnZombies(int zonemax, int zoneTotalZ)
 	{
-		if (gameObject.tag == "Zspawn1" )
+		string tagName = gameObject.tag;
+		GameObject zombie = Zombie1;
+		
+		switch (tagName)
 		{
-			
+			case "Zspawn4":
+				zombie = Zombie4;
+				break;
+			case "Zspawn3":
+				zombie = Zombie3;
+				break;
+			case "Zspawn2":
+				zombie = Zombie2;
+				break;
+			case "Zspawn1":
+				zombie = Zombie1;
+				break;	
 		}
+		
+		if (zoneTotalZ < zonemax)
+		{
+			int add = zonemax - zoneTotalZ;
+
+			for(int i =0; i<= add; i++)
+			{
+				Vector3 pos = gameObject.GetComponent<Transform>().position; 
+				Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
+			}
+		}
+		
 	}
 	
 	
