@@ -89,10 +89,10 @@ public class ZoneSpawners : MonoBehaviour {
 		maxZombieForZone3 = maxZombie(spawnRate3);
 		maxZombieForZone4 = maxZombie(spawnRate4);
 
-		spawnZombies(maxZombieForZone1, z1);
-		spawnZombies(maxZombieForZone2, z2);
-		spawnZombies(maxZombieForZone3, z3);
-		spawnZombies(maxZombieForZone4, z4);
+		spawnZombies(maxZombieForZone1);
+		spawnZombies(maxZombieForZone2);
+		spawnZombies(maxZombieForZone3);
+		spawnZombies(maxZombieForZone4);
 		
 	}
 
@@ -169,7 +169,7 @@ public class ZoneSpawners : MonoBehaviour {
  * NEEDS EDITING CRASHING UNITY
  * NEED TO MAKE USE GPU
  */
-	void spawnZombies(int zonemax, int zoneTotalZ)
+	void spawnZombies(int zonemax)
 	{
 		string tagName = gameObject.tag;
 		GameObject zombie = Zombie1;
@@ -190,15 +190,17 @@ public class ZoneSpawners : MonoBehaviour {
 				break;	
 		}
 		
-		if (zoneTotalZ < zonemax)
+		if (z1 < zonemax)
 		{
-			int add = zonemax - zoneTotalZ;
+			print(z1);
+			Vector3 pos = gameObject.GetComponent<Transform>().position; 
+			Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
+			//int add = zonemax - zoneTotalZ;
 
-			for(int i =0; i<= add; i++)
-			{
-				Vector3 pos = gameObject.GetComponent<Transform>().position; 
-				Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
-			}
+			//for(int i =0; i<= add; i++)
+			//{
+				
+			//}
 		}
 		
 	}
