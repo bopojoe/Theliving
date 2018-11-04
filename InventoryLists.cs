@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +19,10 @@ public class InventoryLists : MonoBehaviour
 	public Text value3;
 	public Sprite food;
 	private bool invOn = false;
+	public Text ammoOnScreen;
+
+	public int ammoCount = 0;
+	private int  maxAmmo = 40;
 	
 	
 	public List<GameObject> inventory = new List<GameObject>();
@@ -36,6 +42,7 @@ public class InventoryLists : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		ammoOnScreen.text = ammoCount.ToString();
 
 		if (Input.GetKeyDown(KeyCode.I))
 		{
@@ -86,6 +93,24 @@ public class InventoryLists : MonoBehaviour
 
 		return count;
 	}
+
+	void addWeapon(GameObject obj)
+	{
+		
+	}
+	public void addAmmo(int num)
+	{
+		if (ammoCount<maxAmmo)
+		{
+			ammoCount += num;
+			if (ammoCount>maxAmmo)
+			{
+				ammoCount = maxAmmo;
+			}
+		}
+		
+	}
+	
 	
 	
 	

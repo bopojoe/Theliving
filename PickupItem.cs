@@ -1,17 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickupItem : MonoBehaviour
 {
 
 	public GameObject food;
+	public GameObject shotgun;
 	public GameObject ammo;
-	public GameObject gun;
+	public GameObject axe;
+	
+	
 	GameObject obj;
 
 	private float objTimer;
+
 	
+
 	// Use this for initialization
 	void Start () {
 		
@@ -41,10 +47,7 @@ public class PickupItem : MonoBehaviour
 			{
 				obj = food;
 			}
-			else
-			{
-				obj = food;
-			}
+			
 
 
 			other.GetComponent<InventoryLists>().addToList(obj);
@@ -54,4 +57,6 @@ public class PickupItem : MonoBehaviour
 			print(this.gameObject.tag+" object added to list");
 		}
 	}
+
+	
 }

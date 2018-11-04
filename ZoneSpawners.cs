@@ -178,30 +178,39 @@ public class ZoneSpawners : MonoBehaviour {
 		{
 			case "Zspawn4":
 				zombie = Zombie4;
+				if (z4 < zonemax)
+				{
+					Vector3 pos = gameObject.GetComponent<Transform>().position; 
+					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
+				}
 				break;
 			case "Zspawn3":
 				zombie = Zombie3;
+				if (z3 < zonemax)
+				{
+					Vector3 pos = gameObject.GetComponent<Transform>().position; 
+					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
+				}
 				break;
 			case "Zspawn2":
 				zombie = Zombie2;
+				if (z2 < zonemax)
+				{
+					Vector3 pos = gameObject.GetComponent<Transform>().position; 
+					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
+				}
 				break;
 			case "Zspawn1":
 				zombie = Zombie1;
+				if (z1 < zonemax)
+				{
+					Vector3 pos = gameObject.GetComponent<Transform>().position; 
+					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
+				}
 				break;	
 		}
 		
-		if (z1 < zonemax)
-		{
-			print(z1);
-			Vector3 pos = gameObject.GetComponent<Transform>().position; 
-			Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
-			//int add = zonemax - zoneTotalZ;
-
-			//for(int i =0; i<= add; i++)
-			//{
-				
-			//}
-		}
+		
 		
 	}
 	
