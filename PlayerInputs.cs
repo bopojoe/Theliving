@@ -75,16 +75,23 @@ public class PlayerInputs : MonoBehaviour
 		}
 		//gun only accurate while walking
 
-		if (Input.GetMouseButtonDown(1)&& shotgunObj.active)
+		if (Input.GetMouseButtonDown(1) && shotgunObj.active)
 		{
-			Quaternion rotation = Quaternion.LookRotation(mussel.transform.position, mussel.transform.position);
-			GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-			GameObject p = (GameObject) Instantiate(bullet, mussel.transform.position, camera.transform.rotation);
-			//p.GetComponent<Transform>().rotation = camera.GetComponent<Transform>().rotation;
-			
-                        p.GetComponent<Rigidbody>().AddForce(transform.forward*500);
-                        Destroy(p,3);
+			int ammo = GetComponent<InventoryLists>().ammoCount;
+			print(ammo+" ammo left");
+			if (ammo > 0)
+			{
+				//Quaternion rotation = Quaternion.LookRotation(mussel.transform.position, mussel.transform.position);
+				GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+				GameObject p = (GameObject) Instantiate(bullet, mussel.transform.position, camera.transform.rotation);
+				//p.GetComponent<Transform>().rotation = camera.GetComponent<Transform>().rotation;
+
+				p.GetComponent<Rigidbody>().AddForce(transform.forward * 500);
+				GetComponent<InventoryLists>().ammoCount -= 1;
+				Destroy(p, 3);
+				
+			}
 		}
-		
+
 	}
 }

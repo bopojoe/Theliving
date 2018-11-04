@@ -28,9 +28,14 @@ public class Health : MonoBehaviour
 	public Sprite sprite14;
 	public Sprite sprite15;
 	public Sprite sprite16;
+	
+	public int damage = 75;
+	//test to see whats happening
+	public GameObject obj;
 
 	private void Awake()
 	{
+		obj = this.gameObject;
 		imageList.Add(sprite1);
 		imageList.Add(sprite2);
 		imageList.Add(sprite3);
@@ -68,7 +73,7 @@ public class Health : MonoBehaviour
 			{
 				dead();
 			}
-			else
+		else if(healthPoints <= 0 && gameObject.tag=="enemy")
 			{
 				zombieDead();
 			}
@@ -148,16 +153,19 @@ public class Health : MonoBehaviour
 
 	void zombieDead()
 	{
-		
+		Destroy(obj);
+		print("zombie dead");
+		//instanciate food
 	}
 
-	/*private void OnCollisionEnter(Collision other)
+	private void OnCollisionEnter(Collision other)
 	{
-		if(other.gameObject.tag=="enemy")
+		if(other.gameObject.tag=="bullet")
 		{
-			healthPoints -= 10;
+			Destroy(other.gameObject);
+			healthPoints -= damage;
 		}
-	}*/
+	}
 
 /*	private void OnCollisionStay(Collision other)
 	{
