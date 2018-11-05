@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
 using Boo.Lang;
+using Gaia.FullSerializer;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Image = UnityEngine.Experimental.UIElements.Image;
@@ -29,13 +30,10 @@ public class Health : MonoBehaviour
 	public Sprite sprite15;
 	public Sprite sprite16;
 	
-	public int damage = 75;
 	//test to see whats happening
-	public GameObject obj;
 
 	private void Awake()
 	{
-		obj = this.gameObject;
 		imageList.Add(sprite1);
 		imageList.Add(sprite2);
 		imageList.Add(sprite3);
@@ -69,14 +67,12 @@ public class Health : MonoBehaviour
 			healthPoints = value;
 
 			//If health is < 0 then die
-			if (healthPoints <= 0&&this.gameObject.tag=="Player")
+			if (healthPoints <= 0)
 			{
+			
 				dead();
 			}
-		else if(healthPoints <= 0 && gameObject.tag=="enemy")
-			{
-				zombieDead();
-			}
+		
 		}
 		
 	}
@@ -139,7 +135,6 @@ public class Health : MonoBehaviour
 	}
 
 
-
 	void dead()
 	{
 	
@@ -151,27 +146,4 @@ public class Health : MonoBehaviour
 		//newText.text = "You managed to stay alive for "+time.text+" /n better luck next time";
 	}
 
-	void zombieDead()
-	{
-		Destroy(obj);
-		print("zombie dead");
-		//instanciate food
-	}
-
-	private void OnCollisionEnter(Collision other)
-	{
-		if(other.gameObject.tag=="bullet")
-		{
-			Destroy(other.gameObject);
-			healthPoints -= damage;
-		}
-	}
-
-/*	private void OnCollisionStay(Collision other)
-	{
-		while(other.gameObject.tag=="enemy")
-		{
-			healthPoints -= 10;
-		}
-	}*/
 }

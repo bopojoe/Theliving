@@ -11,8 +11,10 @@ public class PlayerInputs : MonoBehaviour
 
 	public bool inventoryActive = false;
 	public bool hasShotgun = false;
+	//weapons
 	public bool shotgunOn = false;
-
+	private bool axeOn = false;
+	private bool handsOn = true;
 	public GameObject shotgunObj;
 	public GameObject crosshair;
 	public GameObject mussel;
@@ -58,8 +60,28 @@ public class PlayerInputs : MonoBehaviour
 		{
 			if (hasShotgun)
 			{
-				shotgunOn = !shotgunOn;
+				axeOn = false;
+				shotgunOn = true;
+				handsOn = false;
+				
 			}
+			
+		}
+		
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+				shotgunOn = false;
+				axeOn = true;
+				handsOn = false;
+		}
+		
+		if (Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			shotgunOn = false;
+			axeOn = false;
+			handsOn = false;
+			
+			
 			
 		}
 		
