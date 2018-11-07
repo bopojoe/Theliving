@@ -12,7 +12,7 @@ public class HeatMap : MonoBehaviour
 	public float timeGone;
 	private int timer2;
 	public int timer3;
-	private string tagName;
+	
 	
 
 	// Use this for initialization
@@ -42,9 +42,7 @@ public class HeatMap : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
-			zoneInactive = false;
-			tagName = GetComponent<Collider>().tag;
-			
+			zoneInactive = false;	
 		}
 	}
 
@@ -52,6 +50,10 @@ public class HeatMap : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
+			if (Input.GetKeyDown(KeyCode.P))
+			{
+				heat++;
+			}
 			timer += Time.deltaTime;
 			timer2 = (int) timer % 60;
 			//print("seconds: "+ timer2+", "+"timer: "+timer);

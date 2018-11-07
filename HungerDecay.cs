@@ -64,7 +64,7 @@ public class HungerDecay : MonoBehaviour {
 
 	void decay()
 	{
-		if (timer >= 9.9)
+		if (timer >= 45)
 		{
 			timer = 0;
 			if (hunger > 0)

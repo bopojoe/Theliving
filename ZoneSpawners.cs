@@ -89,10 +89,10 @@ public class ZoneSpawners : MonoBehaviour {
 		maxZombieForZone3 = maxZombie(spawnRate3);
 		maxZombieForZone4 = maxZombie(spawnRate4);
 
-		spawnZombies(maxZombieForZone1);
-		spawnZombies(maxZombieForZone2);
-		spawnZombies(maxZombieForZone3);
-		spawnZombies(maxZombieForZone4);
+		spawnZombies(maxZombieForZone1, "Zspawn1", z1);
+		spawnZombies(maxZombieForZone2, "Zspawn2", z2);
+		spawnZombies(maxZombieForZone3, "Zspawn3", z3);
+		spawnZombies(maxZombieForZone4, "Zspawn4", z4);
 		
 	}
 
@@ -126,15 +126,15 @@ public class ZoneSpawners : MonoBehaviour {
 	int spawnRate(int zonetotal)
 	{
 		int rate;
-		if (zonetotal > 40)
+		if (zonetotal > 200)
 		{
 			rate = 4;
 		
-		}else if (zonetotal > 30)
+		}else if (zonetotal > 100)
 		{
 			rate = 3;
 			
-		}else if (zonetotal > 20)
+		}else if (zonetotal > 50)
 		{
 			rate = 2;
 		}
@@ -152,11 +152,11 @@ public class ZoneSpawners : MonoBehaviour {
 		switch (rate)
 		{
 			case 4:
-				return 10;
+				return 40;
 			case 3:
-				return 10;
+				return 30;
 			case 2:
-				return 10;
+				return 20;
 			case 1:
 				return 10;
 			default:
@@ -169,48 +169,32 @@ public class ZoneSpawners : MonoBehaviour {
  * NEEDS EDITING CRASHING UNITY
  * NEED TO MAKE USE GPU
  */
-	void spawnZombies(int zonemax)
+	void spawnZombies(int zonemax, string tagName, int zombies)
 	{
-		string tagName = gameObject.tag;
+		//string tagName = gameObject.tag;
 		GameObject zombie = Zombie1;
-		
-		switch (tagName)
+
+		if (tagName == gameObject.tag && zombies<zonemax)
 		{
-			case "Zspawn4":
+			if (tagName == "Zspawn4")
+			{
 				zombie = Zombie4;
-				if (z4 < zonemax)
-				{
-					Vector3 pos = gameObject.GetComponent<Transform>().position; 
-					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
-				}
-				break;
-			case "Zspawn3":
+			}else if (tagName == "Zspawn3")
+			{
 				zombie = Zombie3;
-				if (z3 < zonemax)
-				{
-					Vector3 pos = gameObject.GetComponent<Transform>().position; 
-					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
-				}
-				break;
-			case "Zspawn2":
+			}else if (tagName == "Zspawn2")
+			{
 				zombie = Zombie2;
-				if (z2 < zonemax)
-				{
-					Vector3 pos = gameObject.GetComponent<Transform>().position; 
-					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
-				}
-				break;
-			case "Zspawn1":
+			}else if (tagName == "Zspawn1")
+			{
 				zombie = Zombie1;
-				if (z1 < zonemax)
-				{
-					Vector3 pos = gameObject.GetComponent<Transform>().position; 
-					Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
-				}
-				break;	
+			}
+			
+           
+            	Vector3 pos = gameObject.GetComponent<Transform>().position; 
+            	Instantiate(zombie, new Vector3(pos.x,pos.y,pos.z), transform.rotation);
+			print("zomble spawned");
 		}
-		
-		
 		
 	}
 	

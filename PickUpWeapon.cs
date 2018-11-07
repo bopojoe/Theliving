@@ -31,7 +31,7 @@ public class PickUpWeapon : MonoBehaviour {
 		{
 			
 			objTimer += Time.deltaTime % 60;
-			if(objTimer < 10f){
+			if(objTimer < 300f){
 				//print(objTimer);
 			}else{
 				this.gameObject.GetComponent<MeshRenderer>().enabled = true;

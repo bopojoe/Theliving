@@ -18,7 +18,6 @@ public class ZombieHealth : MonoBehaviour {
 	void Update () {
 		if (healthPoints <= 0)
 		{
-			
 			Destroy(gameObject);
 		}
 	}

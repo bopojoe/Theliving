@@ -7,22 +7,30 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class PlayerInputs : MonoBehaviour
 {
 	public GameObject inventory;
+	public GameObject mapCam;
 	public FirstPersonController fpc;
 
 	public bool inventoryActive = false;
+	public bool mapActive = false;
 	public bool hasShotgun = false;
 	//weapons
 	public bool shotgunOn = false;
 	private bool axeOn = false;
 	private bool handsOn = true;
+	private bool timeout;
 	public GameObject shotgunObj;
 	public GameObject crosshair;
-	public GameObject mussel;
+	public GameObject mussel1;
+	public GameObject mussel2;
+	public GameObject mussel3;
 	public GameObject bullet;
+	public GameObject gunSound;
+	private float timer = 2f;
 
 	private void Awake()
 	{
 		fpc = GetComponent<FirstPersonController>();
+		gunSound.SetActive(false);
 	}
 
 	// Use this for initialization
@@ -35,10 +43,36 @@ public class PlayerInputs : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		
-		
-		
+
+		if (timeout)
+		{
+			timer -= Time.deltaTime;
+		}
+
+		if (timer<=0)
+		{
+			timeout = false;
+			timer = 2;
+			gunSound.SetActive(false);
+		}
+
 		inventory.SetActive(inventoryActive);
+		mapCam.SetActive(mapActive);
+		
+		if (Input.GetKeyDown(KeyCode.M))
+		{
+			mapActive = !mapActive;
+		}
+
+		if (mapActive)
+		{
+			Time.timeScale = 0;
+		}
+		else
+		{
+			Time.timeScale = 1;
+		}
+		
 		if (Input.GetKeyDown(KeyCode.I))
 		{ 
 			inventoryActive = !inventoryActive;
@@ -95,23 +129,29 @@ public class PlayerInputs : MonoBehaviour
 			shotgunObj.SetActive(false);
 			crosshair.SetActive(false);
 		}
-		//gun only accurate while walking
+		
 
-		if (Input.GetMouseButtonDown(1) && shotgunObj.active)
+		if (Input.GetMouseButtonDown(0) && shotgunObj.active&&!timeout)
 		{
 			int ammo = GetComponent<InventoryLists>().ammoCount;
 			print(ammo+" ammo left");
 			if (ammo > 0)
 			{
-				//Quaternion rotation = Quaternion.LookRotation(mussel.transform.position, mussel.transform.position);
-				GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-				GameObject p = (GameObject) Instantiate(bullet, mussel.transform.position, camera.transform.rotation);
-				//p.GetComponent<Transform>().rotation = camera.GetComponent<Transform>().rotation;
-
-				p.GetComponent<Rigidbody>().AddForce(transform.forward * 500);
-				GetComponent<InventoryLists>().ammoCount -= 1;
-				Destroy(p, 3);
+			
+				GameObject p1 = (GameObject) Instantiate(bullet, mussel1.transform.position, Quaternion.identity);
+				p1.transform.rotation = mussel1.transform.rotation;
+				GameObject p2 = (GameObject) Instantiate(bullet, mussel2.transform.position, Quaternion.identity);
+				p2.transform.rotation = mussel2.transform.rotation;
+				GameObject p3 = (GameObject) Instantiate(bullet, mussel3.transform.position, Quaternion.identity);
+				p3.transform.rotation = mussel3.transform.rotation;
 				
+				gunSound.SetActive(true);
+
+				
+				GetComponent<InventoryLists>().ammoCount -= 1;
+				timeout = true;
+				
+
 			}
 		}
 
